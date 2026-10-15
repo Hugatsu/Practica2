@@ -1,0 +1,379 @@
+:root {
+  --sea-deep: #0b1d2e;
+  --sea: #13314a;
+  --foam: #e8edf2;
+  --parchment: #f1e2bd;
+  --parchment-dark: #d9c08a;
+  --ink: #3a2414;
+  --ink-soft: #6b4a2f;
+  --red: #b3261e;
+  --gold: #e3b341;
+
+  --font-title: 'Pirata One', 'Georgia', serif;
+  --font-poster: 'Special Elite', 'Courier New', monospace;
+  --font-body: system-ui, 'Segoe UI', Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  color: var(--foam);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(227, 179, 65, 0.12), transparent 40%),
+    linear-gradient(180deg, var(--sea) 0%, var(--sea-deep) 60%);
+  background-attachment: fixed;
+}
+
+a {
+  color: var(--gold);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Cabecera */
+
+.masthead {
+  padding: 3rem 1rem 2rem;
+  text-align: center;
+}
+
+.masthead__kicker {
+  margin: 0;
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.masthead__title {
+  margin: 0.25rem 0;
+  font-family: var(--font-title);
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 400;
+  line-height: 1;
+}
+
+.masthead__lead {
+  margin: 0;
+  opacity: 0.8;
+}
+
+/* Estructura */
+
+.layout {
+  display: grid;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+.section-title {
+  margin: 0 0 1rem;
+  font-family: var(--font-title);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--gold);
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Filtros */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  min-width: 140px;
+}
+
+.field--grow {
+  flex: 1 1 240px;
+}
+
+.field input,
+.field select {
+  padding: 0.6rem 0.75rem;
+  border: 2px solid var(--parchment-dark);
+  border-radius: 6px;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--parchment);
+}
+
+.field input:focus-visible,
+.field select:focus-visible,
+.button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.stats {
+  min-height: 1.5em;
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+
+/* Carteles de "Se Busca" */
+
+.poster {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 1rem 1.25rem;
+  font-family: var(--font-poster);
+  text-align: center;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.35), transparent 60%),
+    var(--parchment);
+  border: 1px solid var(--parchment-dark);
+  box-shadow:
+    inset 0 0 30px rgba(107, 74, 47, 0.35),
+    0 10px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.poster:nth-child(odd) {
+  transform: rotate(-1deg);
+}
+
+.poster:nth-child(even) {
+  transform: rotate(1deg);
+}
+
+.poster:hover {
+  transform: rotate(0) scale(1.03);
+}
+
+.poster--deceased .poster__photo img {
+  filter: grayscale(1);
+}
+
+.poster__rank {
+  position: absolute;
+  top: -0.6rem;
+  left: -0.6rem;
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--parchment);
+  background: var(--red);
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.poster__wanted {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 2.4rem;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.poster__photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  margin: 0.5rem 0;
+  overflow: hidden;
+  border: 3px solid var(--ink);
+  background: var(--parchment-dark);
+}
+
+.poster__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+}
+
+.poster__photo.is-broken {
+  display: grid;
+  place-items: center;
+}
+
+.poster__photo.is-broken::after {
+  content: '?';
+  font-family: var(--font-title);
+  font-size: 5rem;
+  color: var(--ink-soft);
+}
+
+.poster__doa {
+  margin: 0;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.poster__name {
+  margin: 0.25rem 0;
+  font-family: var(--font-title);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.poster__bounty {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.poster__bounty--none {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.poster__meta {
+  margin: 0.5rem 0 0;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+.poster__stamp {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  padding: 0.2rem 0.6rem;
+  font-family: var(--font-body);
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--red);
+  border: 3px solid var(--red);
+  border-radius: 4px;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  opacity: 0.85;
+}
+
+/* Estado de carga */
+
+.poster--skeleton {
+  min-height: 360px;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* Avisos (error / vacío) */
+
+.notice {
+  grid-column: 1 / -1;
+  padding: 2rem;
+  text-align: center;
+  color: var(--ink);
+  background: var(--parchment);
+  border-radius: 8px;
+}
+
+.notice p {
+  margin: 0 0 0.75rem;
+}
+
+.notice__title {
+  font-family: var(--font-title);
+  font-size: 2rem;
+}
+
+.notice--error .notice__title {
+  color: var(--red);
+}
+
+/* Botones */
+
+.button {
+  padding: 0.6rem 1.4rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--parchment);
+  background: var(--red);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.button:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.button--ghost {
+  color: var(--foam);
+  background: transparent;
+  border: 1px solid currentColor;
+}
+
+.load-more {
+  display: grid;
+  justify-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.load-more p {
+  margin: 0;
+}
+
+/* Pie */
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 1rem;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(232, 237, 242, 0.15);
+}
+
+.footer p {
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster,
+  .poster--skeleton {
+    transition: none;
+    animation: none;
+  }
+}
