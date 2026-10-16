@@ -2,61 +2,20 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Tablón de recompensas de One Piece con datos de onepieceapi.com" />
-    <title>Se Busca · Async Odyssey</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Special+Elite&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Special+Elite&display=swap" rel="stylesheet" />
+    <title>Se busca · One Piece</title>
   </head>
   <body>
-    <header class="masthead">
-      <p class="masthead__kicker">Cuartel General de la Marina</p>
-      <h1 class="masthead__title">Se Busca</h1>
-      <p class="masthead__lead">Tablón de recompensas de la Grand Line</p>
+    <header class="cabecera">
+      <h1>Se busca</h1>
+      <p>Los piratas más buscados de la Grand Line</p>
     </header>
 
-    <main class="layout">
-      <section aria-labelledby="most-wanted-title">
-        <h2 id="most-wanted-title" class="section-title">Los más buscados</h2>
-        <div id="most-wanted" class="board" aria-live="polite"></div>
-      </section>
-
-      <section aria-labelledby="registry-title">
-        <h2 id="registry-title" class="section-title">Registro de personajes</h2>
-
-        <form id="filters" class="filters" role="search">
-          <label class="field field--grow">
-            <span>Buscar</span>
-            <input type="search" name="q" placeholder="Luffy, Zoro, Nami…" autocomplete="off" />
-          </label>
-          <label class="field">
-            <span>Estado</span>
-            <select name="status">
-              <option value="all">Todos</option>
-              <option value="alive">Vivos</option>
-              <option value="deceased">Fallecidos</option>
-            </select>
-          </label>
-          <label class="field">
-            <span>Ordenar por</span>
-            <select name="sort">
-              <option value="default">Registro</option>
-              <option value="name">Nombre</option>
-              <option value="bounty">Recompensa</option>
-              <option value="age">Edad</option>
-            </select>
-          </label>
-        </form>
-
-        <p id="stats" class="stats" aria-live="polite"></p>
-        <div id="characters" class="board" aria-live="polite"></div>
-        <div id="load-more" class="load-more"></div>
-      </section>
-    </main>
+    <main id="app"></main>
 
     <script type="module" src="/src/main.js"></script>
   </body>

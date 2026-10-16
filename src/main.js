@@ -1,14 +1,24 @@
 import "./style.css";
 import { obtenerPersonajes } from "./api.js";
+import {
+  prepararCarteles,
+  soloConRecompensa,
+  ordenarPorRecompensa,
+  recompensaTotal,
+  formatearBerries,
+} from "./transform.js";
+import { mostrarCargando, mostrarError, mostrarCarteles } from "./render.js";
 
-async function probar() {
+async function cargar() {
+  mostrarCargando();
   try {
     const personajes = await obtenerPersonajes();
-    console.log("Personajes recibidos:", personajes.length);
-    console.log("Ejemplo:", personajes[0]);
+    const carteles = ordenarPorRecompensa(prepararCarteles(personajes));
+    const resumen = `${carteles.length} piratas buscados · ${formatearBerries(recompensaTotal(carteles))} en total`;
+    mostrarCarteles(carteles, resumen);
   } catch (error) {
-    console.error("Error:", error.message);
+    mostrarError(`No se pudo contactar con la Marina (${error.message})`, cargar);
   }
 }
 
-probar();
+cargar();

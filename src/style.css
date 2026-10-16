@@ -8,6 +8,8 @@
   --ink-soft: #6b4a2f;
   --red: #b3261e;
   --gold: #e3b341;
+  --green: #2d6a4f;
+  --grey: #6c757d;
 
   --font-title: 'Pirata One', 'Georgia', serif;
   --font-poster: 'Special Elite', 'Courier New', monospace;
@@ -23,6 +25,7 @@
 body {
   margin: 0;
   min-height: 100vh;
+  padding: 0 1rem 3rem;
   font-family: var(--font-body);
   color: var(--foam);
   background:
@@ -31,123 +34,132 @@ body {
   background-attachment: fixed;
 }
 
-a {
-  color: var(--gold);
-}
+/* ---------- Cabecera ---------- */
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
-
-/* Cabecera */
-
-.masthead {
+.cabecera {
   padding: 3rem 1rem 2rem;
   text-align: center;
 }
 
-.masthead__kicker {
-  margin: 0;
-  font-size: 0.8rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  color: var(--gold);
-}
-
-.masthead__title {
-  margin: 0.25rem 0;
+.cabecera h1 {
+  margin: 0 0 0.25rem;
   font-family: var(--font-title);
   font-size: clamp(3rem, 10vw, 6rem);
   font-weight: 400;
   line-height: 1;
+  color: var(--gold);
 }
 
-.masthead__lead {
+.cabecera p {
   margin: 0;
   opacity: 0.8;
 }
 
-/* Estructura */
+/* ---------- Buscador y filtro (paso 10) ---------- */
 
-.layout {
-  display: grid;
-  gap: 3rem;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem 3rem;
-}
-
-.section-title {
-  margin: 0 0 1rem;
-  font-family: var(--font-title);
-  font-size: 2rem;
-  font-weight: 400;
-  color: var(--gold);
-}
-
-.board {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 1.5rem;
-}
-
-/* Filtros */
-
-.filters {
+.controles fieldset {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  max-width: 1200px;
+  margin: 0 auto 1rem;
+  padding: 0;
+  border: 0;
 }
 
-.field {
-  display: grid;
-  gap: 0.3rem;
-  font-size: 0.85rem;
-  min-width: 140px;
-}
-
-.field--grow {
-  flex: 1 1 240px;
-}
-
-.field input,
-.field select {
+.controles input,
+.controles select {
   padding: 0.6rem 0.75rem;
-  border: 2px solid var(--parchment-dark);
-  border-radius: 6px;
   font: inherit;
   font-size: 1rem;
   color: var(--ink);
   background: var(--parchment);
+  border: 2px solid var(--parchment-dark);
+  border-radius: 6px;
 }
 
-.field input:focus-visible,
-.field select:focus-visible,
-.button:focus-visible {
+.controles input {
+  flex: 1 1 240px;
+  max-width: 400px;
+}
+
+.controles fieldset:disabled {
+  opacity: 0.5;
+  cursor: progress;
+}
+
+.controles input:focus-visible,
+.controles select:focus-visible,
+.boton:focus-visible {
   outline: 3px solid var(--gold);
   outline-offset: 2px;
 }
 
-.stats {
-  min-height: 1.5em;
-  margin: 0 0 1rem;
+/* ---------- Resumen ---------- */
+
+.resumen {
+  max-width: 1200px;
+  margin: 0 auto 1.5rem;
   font-size: 0.9rem;
+  text-align: center;
   opacity: 0.85;
 }
 
-/* Carteles de "Se Busca" */
+/* ---------- Estados: carga, error, vacío ---------- */
 
-.poster {
+.estado {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  font-family: var(--font-poster);
+  text-align: center;
+  color: var(--ink);
+  background: var(--parchment);
+  border-radius: 8px;
+}
+
+.estado p {
+  margin: 0 0 0.75rem;
+}
+
+.estado--error {
+  color: var(--red);
+}
+
+.boton {
+  padding: 0.6rem 1.4rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--parchment);
+  background: var(--red);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.boton:hover {
+  filter: brightness(1.1);
+}
+
+/* ---------- Rejilla de carteles ---------- */
+
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ---------- Cartel "SE BUSCA" ---------- */
+
+.cartel {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.4rem;
   padding: 1rem 1rem 1.25rem;
   font-family: var(--font-poster);
   text-align: center;
@@ -162,39 +174,19 @@ a {
   transition: transform 0.2s ease;
 }
 
-.poster:nth-child(odd) {
+.cartel:nth-child(odd) {
   transform: rotate(-1deg);
 }
 
-.poster:nth-child(even) {
+.cartel:nth-child(even) {
   transform: rotate(1deg);
 }
 
-.poster:hover {
+.cartel:hover {
   transform: rotate(0) scale(1.03);
 }
 
-.poster--deceased .poster__photo img {
-  filter: grayscale(1);
-}
-
-.poster__rank {
-  position: absolute;
-  top: -0.6rem;
-  left: -0.6rem;
-  display: grid;
-  place-items: center;
-  width: 2.4rem;
-  height: 2.4rem;
-  font-family: var(--font-body);
-  font-weight: 700;
-  color: var(--parchment);
-  background: var(--red);
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.poster__wanted {
+.cartel__titulo {
   margin: 0;
   font-family: var(--font-title);
   font-size: 2.4rem;
@@ -203,71 +195,64 @@ a {
   text-transform: uppercase;
 }
 
-.poster__photo {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  margin: 0.5rem 0;
-  overflow: hidden;
-  border: 3px solid var(--ink);
-  background: var(--parchment-dark);
-}
-
-.poster__photo img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-}
-
-.poster__photo.is-broken {
+/* Retrato con iniciales (la API no trae fotos) */
+.cartel__retrato {
   display: grid;
   place-items: center;
-}
-
-.poster__photo.is-broken::after {
-  content: '?';
+  width: 100%;
+  aspect-ratio: 4 / 3;
   font-family: var(--font-title);
-  font-size: 5rem;
+  font-size: 4rem;
   color: var(--ink-soft);
+  background: var(--parchment-dark);
+  border: 3px solid var(--ink);
 }
 
-.poster__doa {
-  margin: 0;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
-.poster__name {
-  margin: 0.25rem 0;
+.cartel__nombre {
+  margin: 0.25rem 0 0;
   font-family: var(--font-title);
   font-size: 1.6rem;
   font-weight: 400;
   line-height: 1.1;
 }
 
-.poster__bounty {
+.cartel__recompensa {
   margin: 0;
   font-size: 1.05rem;
   font-weight: 700;
 }
 
-.poster__bounty--none {
-  font-size: 0.85rem;
-  font-weight: 400;
-  color: var(--ink-soft);
+.cartel__estado {
+  padding: 0.1rem 0.7rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--parchment);
+  text-transform: uppercase;
+  border-radius: 999px;
 }
 
-.poster__meta {
-  margin: 0.5rem 0 0;
+.cartel__estado--vivo { background: var(--green); }
+.cartel__estado--fallecido { background: var(--red); }
+.cartel__estado--desconocido { background: var(--grey); }
+
+.cartel__datos {
+  display: grid;
+  gap: 0.15rem;
+  margin: 0.25rem 0 0;
+  padding: 0;
   font-size: 0.75rem;
   color: var(--ink-soft);
+  list-style: none;
 }
 
-.poster__stamp {
+/* Sello rojo sobre el retrato de los fallecidos.
+   :has() selecciona el cartel que CONTIENE la etiqueta de fallecido */
+.cartel:has(.cartel__estado--fallecido)::after {
+  content: 'Fallecido';
   position: absolute;
-  top: 40%;
+  top: 38%;
   left: 50%;
   padding: 0.2rem 0.6rem;
   font-family: var(--font-body);
@@ -281,99 +266,12 @@ a {
   opacity: 0.85;
 }
 
-/* Estado de carga */
-
-.poster--skeleton {
-  min-height: 360px;
-  animation: pulse 1.2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  50% {
-    opacity: 0.45;
-  }
-}
-
-/* Avisos (error / vacío) */
-
-.notice {
-  grid-column: 1 / -1;
-  padding: 2rem;
-  text-align: center;
-  color: var(--ink);
-  background: var(--parchment);
-  border-radius: 8px;
-}
-
-.notice p {
-  margin: 0 0 0.75rem;
-}
-
-.notice__title {
-  font-family: var(--font-title);
-  font-size: 2rem;
-}
-
-.notice--error .notice__title {
-  color: var(--red);
-}
-
-/* Botones */
-
-.button {
-  padding: 0.6rem 1.4rem;
-  font: inherit;
-  font-weight: 600;
-  color: var(--parchment);
-  background: var(--red);
-  border: 0;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.button:disabled {
-  cursor: progress;
-  opacity: 0.7;
-}
-
-.button--ghost {
-  color: var(--foam);
-  background: transparent;
-  border: 1px solid currentColor;
-}
-
-.load-more {
-  display: grid;
-  justify-items: center;
-  gap: 0.5rem;
-  margin-top: 2rem;
-}
-
-.load-more p {
-  margin: 0;
-}
-
-/* Pie */
-
-.footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem 1rem;
-  font-size: 0.85rem;
-  border-top: 1px solid rgba(232, 237, 242, 0.15);
-}
-
-.footer p {
-  margin: 0;
+.cartel:has(.cartel__estado--fallecido) .cartel__retrato {
+  filter: grayscale(1) brightness(0.9);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .poster,
-  .poster--skeleton {
+  .cartel {
     transition: none;
-    animation: none;
   }
 }
