@@ -2,6 +2,10 @@ import { formatearBerries } from "./transform.js";
 
 const app = document.querySelector("#app");
 
+// Emoji de bandera pirata escrito con escapes: es bandera + unión invisible (ZWJ) + calavera,
+// y así el código fuente no contiene caracteres invisibles
+const BANDERA_PIRATA = "\u{1F3F4}\u200D\u2620\uFE0F";
+
 // Crea un elemento con clase y texto. Usamos textContent (no innerHTML)
 // porque los datos vienen de fuera: así nunca se interpretan como HTML
 function crear(etiqueta, clase, texto) {
@@ -52,7 +56,7 @@ function crearCartel(c) {
 
   // Solo mostramos los datos que existen: filter(Boolean) quita los false/null
   const datos = [
-    c.tripulacion && `🏴‍☠️ ${c.tripulacion}`,
+    c.tripulacion && `${BANDERA_PIRATA} ${c.tripulacion}`,
     c.fruta && `🍎 ${c.fruta}${c.tipoFruta ? ` (${c.tipoFruta})` : ""}`,
     c.edad !== null && `${c.edad} años`,
     c.altura !== null && `${c.altura} cm`,
