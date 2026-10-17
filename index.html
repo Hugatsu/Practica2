@@ -10,23 +10,81 @@
     <title>Se busca · One Piece</title>
   </head>
 
-  <form class="controles" id="controles">
-      <fieldset id="campos" disabled>
-        <input type="search" id="busqueda" placeholder="Buscar pirata…" autocomplete="off" />
-        <select id="filtro-estado">
-          <option value="todos">Todos</option>
-          <option value="Vivo">Vivos</option>
-          <option value="Fallecido">Fallecidos</option>
-          <option value="Desconocido">Desconocidos</option>
-        </select>
-      </fieldset>
-  </form>
-  
   <body>
     <header class="cabecera">
       <h1>Se busca</h1>
       <p>Los piratas más buscados de la Grand Line</p>
     </header>
+
+    <form class="controles" id="controles">
+      <fieldset id="campos" disabled>
+        <input
+          type="search"
+          id="busqueda"
+          class="controles__busqueda"
+          placeholder="Buscar pirata por nombre…"
+          aria-label="Buscar pirata por nombre"
+          autocomplete="off"
+        />
+
+        <div class="controles__filtros">
+          <label class="filtro">
+            <span class="filtro__nombre">Tripulación</span>
+            <input
+              type="search"
+              id="filtro-tripulacion"
+              list="tripulaciones"
+              placeholder="Escribe una tripulación…"
+              autocomplete="off"
+            />
+            <!-- Las opciones del autocompletado se rellenan desde render.js con los datos de la API -->
+            <datalist id="tripulaciones"></datalist>
+          </label>
+
+          <label class="filtro">
+            <span class="filtro__nombre">Estado</span>
+            <select id="filtro-estado">
+              <option value="todos">Todos</option>
+              <option value="Vivo">Vivos</option>
+              <option value="Fallecido">Fallecidos</option>
+              <option value="Desconocido">Desconocidos</option>
+            </select>
+          </label>
+
+          <label class="filtro">
+            <span class="filtro__nombre">Recompensa</span>
+            <select id="filtro-recompensa">
+              <option value="con">Con recompensa</option>
+              <option value="sin">Sin recompensa</option>
+              <option value="todos">Todos</option>
+            </select>
+          </label>
+
+          <label class="filtro">
+            <span class="filtro__nombre">Fruta del diablo</span>
+            <select id="filtro-fruta">
+              <option value="todos">Todos</option>
+              <option value="con">Con fruta</option>
+              <option value="sin">Sin fruta</option>
+              <!-- Los tipos (Paramecia, Logia…) se rellenan desde render.js -->
+              <optgroup label="Tipo de fruta" id="tipos-fruta"></optgroup>
+            </select>
+          </label>
+
+          <label class="filtro">
+            <span class="filtro__nombre">Ordenar por</span>
+            <select id="orden">
+              <option value="recompensa">Mayor recompensa</option>
+              <option value="nombre">Nombre (A-Z)</option>
+              <option value="edad">Mayor edad</option>
+              <option value="altura">Mayor altura</option>
+            </select>
+          </label>
+        </div>
+
+        <button type="reset" class="boton boton--secundario">Limpiar filtros</button>
+      </fieldset>
+    </form>
 
     <main id="app"></main>
 

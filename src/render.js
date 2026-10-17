@@ -21,6 +21,18 @@ const iniciales = (nombre) =>
     .map((palabra) => palabra[0].toUpperCase())
     .join("");
 
+// Rellena un <datalist>, <select> u <optgroup> con una <option> por valor.
+// replaceChildren evita duplicados si se vuelve a cargar (botón Reintentar)
+export function rellenarOpciones(contenedor, valores) {
+  contenedor.replaceChildren(
+    ...valores.map((valor) => {
+      const opcion = crear("option", null, valor);
+      opcion.value = valor;
+      return opcion;
+    }),
+  );
+}
+
 // ESTADO 1: cargando
 export function mostrarCargando() {
   app.replaceChildren(crear("p", "estado", "⏳ Buscando piratas por la Grand Line…"));
@@ -41,7 +53,7 @@ function crearCartel(c) {
   // Solo mostramos los datos que existen: filter(Boolean) quita los false/null
   const datos = [
     c.tripulacion && `🏴‍☠️ ${c.tripulacion}`,
-    c.fruta && `🍎 ${c.fruta}`,
+    c.fruta && `🍎 ${c.fruta}${c.tipoFruta ? ` (${c.tipoFruta})` : ""}`,
     c.edad !== null && `${c.edad} años`,
     c.altura !== null && `${c.altura} cm`,
   ].filter(Boolean);
@@ -63,7 +75,7 @@ function crearCartel(c) {
 // ESTADO 3: datos (o ESTADO 3b: vacío)
 export function mostrarCarteles(carteles, resumen) {
   if (carteles.length === 0) {
-    app.replaceChildren(crear("p", "estado", "🧭 Ningún pirata coincide con la búsqueda."));
+    app.replaceChildren(crear("p", "estado", "🧭 Ningún pirata coincide con la búsqueda y los filtros."));
     return;
   }
   const rejilla = crear("section", "rejilla");

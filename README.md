@@ -13,7 +13,7 @@ API: [One Piece API](https://api-onepiece.com/en) · `GET https://api.api-onepie
 Abre `http://localhost:5173` en el navegador.
 
 - Al cargar aparecen los personajes con recompensa, ordenados de mayor a menor.
-- Escribe en el buscador para filtrar por nombre o usa los distintos desplegables para filtrar los personejes.
+- Escribe en el buscador para filtrar por nombre. Debajo hay filtros por tripulación (con autocompletado), estado (vivo/fallecido), recompensa (con o sin) y fruta del diablo (con, sin o por tipo), además de un desplegable para ordenar. El botón "Limpiar filtros" los devuelve a su valor inicial.
 - Encima de los carteles se muestra cuántos personajes hay y la suma de sus recompensas.
 - Mientras se cargan los datos sale un mensaje de carga y el buscador está desactivado. Si la API falla, sale un error con un botón para reintentar.
 - Los datos se guardan en `localStorage` durante 1 hora.

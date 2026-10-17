@@ -10,6 +10,14 @@ const ESTADOS = {
 export const normalizarEstado = (estado) =>
   ESTADOS[estado?.toLowerCase()] ?? "Desconocido";
 
+// Algunos tipos de fruta vienen en francés
+const TIPOS_FRUTA = {
+  "Zoan Mythique": "Zoan Mítica",
+  "Zoan Antique": "Zoan Ancestral",
+};
+
+const normalizarTipoFruta = (tipo) => (tipo ? (TIPOS_FRUTA[tipo] ?? tipo) : null);
+
 // "3.000.000.000" → 3000000000 | " 11 ans" → 11 | "1 000 ans" → 1000 | "-" → null
 export function textoANumero(texto) {
   if (typeof texto !== "string") return null;
@@ -27,28 +35,55 @@ export const aCartel = (p) => ({
   estado: normalizarEstado(p.status),
   tripulacion: p.crew?.name ?? null,
   fruta: p.fruit?.name ?? null,
-  tipoFruta: p.fruit?.type ?? null,
+  tipoFruta: normalizarTipoFruta(p.fruit?.type),
   oficio: p.job?.trim() || null,
 });
 
 export const prepararCarteles = (personajes) => personajes.map(aCartel);
 
-export const soloConRecompensa = (carteles) =>
-  carteles.filter((c) => c.recompensa !== null);
+// Valores distintos de un campo, sin vacíos y en orden alfabético (para rellenar desplegables)
+export const valoresUnicos = (carteles, campo) =>
+  [...new Set(carteles.map((c) => c[campo]).filter(Boolean))].toSorted((a, b) =>
+    a.localeCompare(b, "es"),
+  );
 
-export const buscarPorNombre = (carteles, texto) => {
-  const busqueda = texto.trim().toLowerCase();
-  return busqueda === ""
-    ? carteles
-    : carteles.filter((c) => c.nombre.toLowerCase().includes(busqueda));
+// "con" → tiene el dato | "sin" → no lo tiene | "todos" → no filtra
+const conOSin = (opcion, tieneDato) => opcion === "todos" || (opcion === "con") === tieneDato;
+
+const contieneTexto = (valor, texto) =>
+  (valor ?? "").toLowerCase().includes(texto.trim().toLowerCase());
+
+// La fruta puede filtrarse por "con"/"sin" o por un tipo concreto ("Logia", "Zoan"…)
+const coincideFruta = (c, opcion) =>
+  ["todos", "con", "sin"].includes(opcion)
+    ? conOSin(opcion, c.fruta !== null)
+    : c.tipoFruta === opcion;
+
+// Un cartel se muestra solo si cumple TODAS las condiciones (every)
+export const aplicarFiltros = (carteles, filtros) => {
+  const condiciones = [
+    (c) => contieneTexto(c.nombre, filtros.nombre),
+    (c) => filtros.tripulacion.trim() === "" || contieneTexto(c.tripulacion, filtros.tripulacion),
+    (c) => filtros.estado === "todos" || c.estado === filtros.estado,
+    (c) => conOSin(filtros.recompensa, c.recompensa !== null),
+    (c) => coincideFruta(c, filtros.fruta),
+  ];
+  return carteles.filter((c) => condiciones.every((cumple) => cumple(c)));
 };
 
-export const filtrarPorEstado = (carteles, estado) =>
-  estado === "todos" ? carteles : carteles.filter((c) => c.estado === estado);
+// Los que no tienen el dato (null) van siempre al final
+const deMayorAMenor = (campo) => (a, b) => (b[campo] ?? -1) - (a[campo] ?? -1);
+
+const COMPARADORES = {
+  recompensa: deMayorAMenor("recompensa"),
+  edad: deMayorAMenor("edad"),
+  altura: deMayorAMenor("altura"),
+  nombre: (a, b) => a.nombre.localeCompare(b.nombre, "es"),
+};
 
 // toSorted no modifica el array original (inmutabilidad)
-export const ordenarPorRecompensa = (carteles) =>
-  carteles.toSorted((a, b) => (b.recompensa ?? 0) - (a.recompensa ?? 0));
+export const ordenarCarteles = (carteles, criterio) =>
+  carteles.toSorted(COMPARADORES[criterio] ?? COMPARADORES.recompensa);
 
 export const recompensaTotal = (carteles) =>
   carteles.reduce((total, c) => total + (c.recompensa ?? 0), 0);

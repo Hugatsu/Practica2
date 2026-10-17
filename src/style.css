@@ -58,18 +58,20 @@ body {
 /* ---------- Buscador y filtro (paso 10) ---------- */
 
 .controles fieldset {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-  max-width: 1200px;
-  margin: 0 auto 1rem;
-  padding: 0;
-  border: 0;
+  display: grid;
+  gap: 1.25rem;
+  max-width: 1000px;
+  margin: 0 auto 2rem;
+  padding: 1.5rem;
+  background: rgba(11, 29, 46, 0.6);
+  border: 2px solid var(--parchment-dark);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
 }
 
 .controles input,
 .controles select {
+  width: 100%;
   padding: 0.6rem 0.75rem;
   font: inherit;
   font-size: 1rem;
@@ -79,9 +81,38 @@ body {
   border-radius: 6px;
 }
 
-.controles input {
-  flex: 1 1 240px;
-  max-width: 400px;
+/* Buscador principal: ocupa todo el ancho y es más grande */
+.controles .controles__busqueda {
+  padding: 0.9rem 1.1rem;
+  font-family: var(--font-poster);
+  font-size: 1.25rem;
+}
+
+/* Desplegables en rejilla: se recolocan solos según el ancho de pantalla */
+.controles__filtros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.filtro {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.filtro__nombre {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.boton--secundario {
+  justify-self: center;
+  color: var(--gold);
+  background: transparent;
+  border: 2px solid var(--gold);
 }
 
 .controles fieldset:disabled {
